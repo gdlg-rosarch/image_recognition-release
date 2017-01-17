@@ -1,0 +1,12 @@
+Source: ros-kinetic-tensorflow-ros-rqt
+Section: misc
+Priority: extra
+Maintainer: Rein Appeldoorn <reinzor@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin, ros-kinetic-rqt-gui, ros-kinetic-rqt-gui-py, ros-kinetic-tensorflow-ros
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-tensorflow-ros-rqt
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-rqt-gui, ros-kinetic-rqt-gui-py, ros-kinetic-tensorflow-ros
+Description: The tensorflow_ros_rqt package
