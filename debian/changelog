@@ -1,0 +1,21 @@
+ros-kinetic-skybiometry-ros (0.0.2-1xenial) xenial; urgency=high
+
+
+
+ -- rein <rein@todo.todo>  Mon, 16 Jan 2017 23:00:00 -0000
+
+ros-kinetic-skybiometry-ros (0.0.1-1xenial) xenial; urgency=high
+
+  * Update README.md
+  * added face
+  * Added test image
+  * Create README.md
+  * Documentation
+  * Implemented image saving option
+  * Implemented skybiometry python module, ros node and commandline client
+  * added packages openface ros and skybiometry ros
+  * Contributors: Rein Appeldoorn
+
+ -- rein <rein@todo.todo>  Mon, 16 Jan 2017 23:00:00 -0000
+
+
