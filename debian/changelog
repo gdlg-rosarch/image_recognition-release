@@ -1,0 +1,28 @@
+ros-kinetic-image-recognition (0.0.4-0wily) wily; urgency=high
+
+
+
+ -- Rein Appeldoorn <reinzor@gmail.com>  Mon, 06 Feb 2017 23:00:00 -0000
+
+ros-kinetic-image-recognition (0.0.3-0wily) wily; urgency=high
+
+
+
+ -- Rein Appeldoorn <reinzor@gmail.com>  Mon, 06 Feb 2017 23:00:00 -0000
+
+ros-kinetic-image-recognition (0.0.2-0wily) wily; urgency=high
+
+
+
+ -- Rein Appeldoorn <reinzor@gmail.com>  Mon, 16 Jan 2017 23:00:00 -0000
+
+ros-kinetic-image-recognition (0.0.1-0wily) wily; urgency=high
+
+  * Create README.md
+  * Added image recognition util to support labeled and raw writing of image in predefined folder structure
+  * added catkin_meta pkg
+  * Contributors: Rein Appeldoorn
+
+ -- Rein Appeldoorn <reinzor@gmail.com>  Mon, 16 Jan 2017 23:00:00 -0000
+
+
