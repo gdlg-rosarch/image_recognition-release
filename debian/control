@@ -1,0 +1,12 @@
+Source: ros-kinetic-image-recognition
+Section: misc
+Priority: extra
+Maintainer: Rein Appeldoorn <reinzor@gmail.com>
+Build-Depends: debhelper (>= 9.0.0), ros-kinetic-catkin
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-kinetic-image-recognition
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-kinetic-image-recognition-msgs, ros-kinetic-image-recognition-rqt, ros-kinetic-image-recognition-util, ros-kinetic-openface-ros, ros-kinetic-skybiometry-ros, ros-kinetic-tensorflow-ros, ros-kinetic-tensorflow-ros-rqt
+Description: The image_recognition package
