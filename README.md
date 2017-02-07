@@ -1,60 +1,52 @@
-# tensorflow_ros_rqt
+# TU/e Robotics image_recognition
+Packages for image recognition - Robocup TU/e Robotics
 
-Contains rqt plugins for training a neural network for object recognition using TensorFlow.
+## Travis CI Build Status
 
-## Train plugin
+[![Build Status](https://travis-ci.org/tue-robotics/image_recognition.svg)](https://travis-ci.org/tue-robotics/image_recognition)
 
-![GUI Overview](doc/img/overview.png)
+# How to
 
-This RQT plugin (http://wiki.ros.org/rqt) enables training a neural network to classify objects based on images using TensorFlow. The end result will be a trained TensorFlow graph and output labels as in https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/image_retraining/retrain.py
+## Object recognition
+Step 1: label images with the [image_recognition_rqt#annotation-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#annotation-plugin)
 
-### How to 
+[![Annotate](http://img.youtube.com/vi/uAQvn7SInlg/0.jpg)](http://www.youtube.com/watch?v=uAQvn7SInlg)
+<-- Youtube video
 
-#### Prerequisites
+Step 2: train a neural network with the [tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt)
 
-Annotated data with label subdirs that contain image segments of the specified label, e.g. `/tmp/object_recognition`:
+[![Train](http://img.youtube.com/vi/6JdtWa8FD04/0.jpg)](http://www.youtube.com/watch?v=6JdtWa8FD04)
+<-- Youtube video
 
-    /tmp/object_recognition/:
-    drwxrwxr-x 2 rein rein 4,0K okt 18 21:22 apple
-    drwxrwxr-x 2 rein rein 4,0K okt 18 21:22 banana
-    drwxrwxr-x 2 rein rein 4,0K okt 18 21:22 choco_peanuts
+Step 3: predict labels for new data with the [image_recognition_rqt#test-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#test-plugin)
 
-    /tmp/object_recognition/apple:
-    -rw-rw-r-- 1 rein rein 14K okt 18 21:22 2016-10-18-21-22-29.jpg
-    ...
+[![Recognize](http://img.youtube.com/vi/OJKYLB3myWw/0.jpg)](http://www.youtube.com/watch?v=OJKYLB3myWw)
+<-- Youtube video
 
-    /tmp/object_recognition/banana:
-    -rw-rw-r-- 1 rein rein 16K okt 18 21:22 2016-10-18-21-22-37.jpg
-    ...
+## Face recognition
+See the tutorial at [openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros)
 
-    /tmp/object_recognition/choco_peanuts:
-    -rw-rw-r-- 1 rein rein 8,6K okt 18 21:22 2016-10-18-21-22-43.jpg
-    ...
-    
-This labeled data set can be created with use of the label RQT plugin in the [image_recognition_rqt](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt) package. But, feel free to use any kind of tooling to create your own data set!
+[![Face recognition](http://img.youtube.com/vi/yGqDdfYxHZw/0.jpg)](http://www.youtube.com/watch?v=yGqDdfYxHZw)
+<-- Youtube video
 
-#### Training
+# Installation
 
-Start the train GUI
+Clone the repo in your catkin_ws:
+        
+        cd ~/catkin_ws/src
+        git clone https://github.com/tue-robotics/image_recognition.git
+        
+Build your catkin workspace
+        cd ~/catkin_ws
+        catkin_make
 
-    rosrun tensorflow_ros_rqt train_gui 
-    
-![GUI Overview](doc/img/overview.png)
+# Packages
 
-Set the images and output directory. For the example above, use `/tmp/object_recognition` as images directory
-
-![Dir picker](doc/img/dir_picker.png)
-
-and for example `/tmp` as output directory.
-
-Click the gear wheel in the right top of the GUI to set the batch size and the number of steps:
-
-![Step Size](doc/img/step_size.png)
-![Batch Size](doc/img/batch_size.png)
-
-Once everything is configured, press the "Train" button.
-
-Wait for some hours :) -- Check console log. 
-
-
-
+- [image_recognition](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition) - Meta package for all image_recognition packages.
+- [image_recognition_util](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_util) - Utils shared among image recognition packages
+- [image_recognition_msgs](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_msgs) - Interface definition for image recognition
+- [image_recognition_rqt](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt) - RQT tools with helpers testing this interface and training/labeling data.
+- [tensorflow_ros](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros) - Object recognition with use of Tensorflow. The user can retrain the top layers of a neural network to perform classification with its own dataset as described in this tutorial (https://www.tensorflow.org/versions/r0.11/how_tos/image_retraining/index.html).
+- [tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt) - RQT tools for retraining a Tensorflow neural network.
+- [openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros) - ROS wrapper for Openface (https://github.com/cmusatyalab/openface) to detect and recognize faces in images.
+- [skybiometry_ros](https://github.com/tue-robotics/image_recognition/tree/master/skybiometry_ros) - ROS wrapper for Skybiometry (https://skybiometry.com/) for getting face properties of a detected face, e.g. age estimation, gender estimation etc.
