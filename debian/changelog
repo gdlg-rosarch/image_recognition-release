@@ -1,0 +1,15 @@
+ros-kinetic-image-recognition-util (0.0.2-2jessie) jessie; urgency=high
+
+
+
+ -- Rein Appeldoorn <reinzor@gmail.com>  Mon, 16 Jan 2017 23:00:00 -0000
+
+ros-kinetic-image-recognition-util (0.0.1-2jessie) jessie; urgency=high
+
+  * Create README.md
+  * Added image recognition util to support labeled and raw writing of image in predefined folder structure
+  * Contributors: Rein Appeldoorn
+
+ -- Rein Appeldoorn <reinzor@gmail.com>  Mon, 16 Jan 2017 23:00:00 -0000
+
+
