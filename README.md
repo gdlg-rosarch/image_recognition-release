@@ -1,54 +1,66 @@
-# TU/e Robotics image_recognition
-Packages for image recognition - Robocup TU/e Robotics
+# openface_ros
 
-## Package status & Description
+Face recognition with use of Openface (https://cmusatyalab.github.io/openface/)
 
-Package | Build status Xenial Kinetic x64 | Description
-------- | ------------------------------- | -----------
-[image_recognition](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition__ubuntu_xenial__source/1/) | Meta package for all image_recognition packages.
-[image_recognition_util](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_util) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_util__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_util__ubuntu_xenial__source/1/) | Utils shared among image recognition packages
-[image_recognition_msgs](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_msgs) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_msgs__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_msgs__ubuntu_xenial__source/1/) | Interface definition for image recognition
-[image_recognition_rqt](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_rqt__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_rqt__ubuntu_xenial__source/1/) | RQT tools with helpers testing this interface and training/labeling data.
-[tensorflow_ros](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__tensorflow_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__tensorflow_ros__ubuntu_xenial__source/1/) | Object recognition with use of Tensorflow. The user can retrain the top layers of a neural network to perform classification with its own dataset as described in [this tutorial](https://www.tensorflow.org/versions/r0.11/how_tos/image_retraining/index.html).
-[tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt) | [![Build Status](http://build.ros.org/job/Ksrc_uX__tensorflow_ros_rqt__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__tensorflow_ros_rqt__ubuntu_xenial__source/1/) | RQT tools for retraining a Tensorflow neural network.
-[openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__openface_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__openface_ros__ubuntu_xenial__source/1/) | ROS wrapper for Openface (https://github.com/cmusatyalab/openface) to detect and recognize faces in images.
-[skybiometry_ros](https://github.com/tue-robotics/image_recognition/tree/master/skybiometry_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__skybiometry_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__skybiometry_ros_ubuntu_xenial__source/1/) | ROS wrapper for Skybiometry (https://skybiometry.com/) for getting face properties of a detected face, e.g. age estimation, gender estimation etc.
+## Installation
 
-## Travis CI Build Status
+See https://github.com/tue-robotics/image_recognition
 
-[![Build Status](https://travis-ci.org/tue-robotics/image_recognition.svg)](https://travis-ci.org/tue-robotics/image_recognition)
+Make sure that openface is correctly installed. Installation instructions can be found here: https://cmusatyalab.github.io/openface/setup/
 
-# How to
+## How-to
 
-## Object recognition
-Step 1: label images with the [image_recognition_rqt#annotation-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#annotation-plugin)
+### ROS Node
 
-[![Annotate](http://img.youtube.com/vi/uAQvn7SInlg/0.jpg)](http://www.youtube.com/watch?v=uAQvn7SInlg)
-<-- Youtube video
+Run the openface_ros node in one terminal (Specify the dlib and openface_net path as ROS parameter):
 
-Step 2: train a neural network with the [tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt)
+    rosrun openface_ros face_recognition_node    
+    
+Run the rqt annotation client (https://github.com/tue-robotics/image_recognition_rqt)
 
-[![Train](http://img.youtube.com/vi/6JdtWa8FD04/0.jpg)](http://www.youtube.com/watch?v=6JdtWa8FD04)
-<-- Youtube video
+    rosrun image_recognition_rqt annotation_gui
+    
+Setup the service by clicking the gear wheel in the top-right corner. Select the `/annotate` services exposed by the openface ros node. Also don't forget to set-up your labels.
 
-Step 3: predict labels for new data with the [image_recognition_rqt#test-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#test-plugin)
+![Configuration](doc/config.png)
 
-[![Recognize](http://img.youtube.com/vi/OJKYLB3myWw/0.jpg)](http://www.youtube.com/watch?v=OJKYLB3myWw)
-<-- Youtube video
+Now draw a rectangle around the face you would like to learn. The face recognizer will find the biggest face in the image and store a representation for this face. 
 
-## Face recognition
-See the tutorial at [openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros)
+![Annotate](doc/annotate.png)
 
-[![Face recognition](http://img.youtube.com/vi/yGqDdfYxHZw/0.jpg)](http://www.youtube.com/watch?v=yGqDdfYxHZw)
-<-- Youtube video
+Now select the label and you will see that the openface ros node stores the face (console output node):
 
-# Installation
+    [INFO] [WallTime: 1478636380.407308] Succesfully learned face of 'rokus'
 
-Clone the repo in your catkin_ws:
-        
-        cd ~/catkin_ws/src
-        git clone https://github.com/tue-robotics/image_recognition.git
-        
-Build your catkin workspace
-        cd ~/catkin_ws
-        catkin_make
+Learn as many faces as you want ..
+
+Next step is starting the image_recognition_Rqt test gui (https://github.com/tue-robotics/image_recognition_rqt)
+
+    rosrun image_recognition_rqt test_gui
+    
+Again configure the service you want to call with the gear-wheel in the top-right corner of the screen. If everything is set-up, draw a rectangle in the image and ask the service for detections:
+
+![Test](doc/test_face.png)
+
+You will see that the result of the detection will prompt in a dialog combo box. Also the detections will be drawn on the image.
+
+### Command line
+
+Command line interface to test the detection / recognition based on an image:
+
+    usage: get_face_recognition [-h] -i IMAGE [-k ALIGN_PATH] [-s NET_PATH] [-v]
+
+Run the command on an example image:
+
+    rosrun openface_ros get_face_recognition -i `rospack find openface_ros`/doc/example.png
+
+This will lookup this image in the openface_ros/doc folder and perform recognitions
+
+![Example](doc/example.png)
+
+Output: 
+
+    [RecognizedFace(roi=(374, 188, 108, 123), l2_distances=[]), RecognizedFace(roi=(72, 147, 88, 105), l2_distances=[]), RecognizedFace(roi=(377, 95, 74, 86), l2_distances=[]), RecognizedFace(roi=(149, 26, 74, 86), l2_distances=[]), RecognizedFace(roi=(52, 47, 75, 86), l2_distances=[]), RecognizedFace(roi=(246, 115, 88, 102), l2_distances=[]), RecognizedFace(roi=(0, 0, 42, 60), l2_distances=[]), RecognizedFace(roi=(336, 33, 74, 86), l2_distances=[]), RecognizedFace(roi=(228, 0, 62, 60), l2_distances=[])]
+
+Since no faces were trained, the l2_distances will not be calculated of-course.
+    
