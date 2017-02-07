@@ -1,54 +1,90 @@
-# TU/e Robotics image_recognition
-Packages for image recognition - Robocup TU/e Robotics
+# image_recognition_rqt
 
-## Package status & Description
+Contains rqt plugins for image recognition 
 
-Package | Build status Xenial Kinetic x64 | Description
-------- | ------------------------------- | -----------
-[image_recognition](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition__ubuntu_xenial__source/1/) | Meta package for all image_recognition packages.
-[image_recognition_util](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_util) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_util__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_util__ubuntu_xenial__source/1/) | Utils shared among image recognition packages
-[image_recognition_msgs](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_msgs) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_msgs__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_msgs__ubuntu_xenial__source/1/) | Interface definition for image recognition
-[image_recognition_rqt](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_rqt__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_rqt__ubuntu_xenial__source/1/) | RQT tools with helpers testing this interface and training/labeling data.
-[tensorflow_ros](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__tensorflow_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__tensorflow_ros__ubuntu_xenial__source/1/) | Object recognition with use of Tensorflow. The user can retrain the top layers of a neural network to perform classification with its own dataset as described in [this tutorial](https://www.tensorflow.org/versions/r0.11/how_tos/image_retraining/index.html).
-[tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt) | [![Build Status](http://build.ros.org/job/Ksrc_uX__tensorflow_ros_rqt__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__tensorflow_ros_rqt__ubuntu_xenial__source/1/) | RQT tools for retraining a Tensorflow neural network.
-[openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__openface_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__openface_ros__ubuntu_xenial__source/1/) | ROS wrapper for Openface (https://github.com/cmusatyalab/openface) to detect and recognize faces in images.
-[skybiometry_ros](https://github.com/tue-robotics/image_recognition/tree/master/skybiometry_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__skybiometry_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__skybiometry_ros_ubuntu_xenial__source/1/) | ROS wrapper for Skybiometry (https://skybiometry.com/) for getting face properties of a detected face, e.g. age estimation, gender estimation etc.
+## Test plugin
 
-## Travis CI Build Status
+RQT plugin to test servers that expose the interface defined in package: [image_recognition_msgs](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_msgs)
 
-[![Build Status](https://travis-ci.org/tue-robotics/image_recognition.svg)](https://travis-ci.org/tue-robotics/image_recognition)
+![GUI Overview](doc/img/test.png)
 
-# How to
+### How to 
 
-## Object recognition
-Step 1: label images with the [image_recognition_rqt#annotation-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#annotation-plugin)
+Start the rqt plugin stand alone (if this does not work, try a `rqt --force-rediscover`):
 
-[![Annotate](http://img.youtube.com/vi/uAQvn7SInlg/0.jpg)](http://www.youtube.com/watch?v=uAQvn7SInlg)
-<-- Youtube video
+    rosrun image_recognition_rqt test_gui # Calls a rqt -s image_recognition_rqt.test.TestPlugin
+    
+Select a rostopic of type `sensor_msgs/Image` and a service of type `image_recognition_msgs/Recognize` or `image_recognition_msgs/GetFaceProperties` with use of the configuration button in the menu-bar (gear wheel icon):
 
-Step 2: train a neural network with the [tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt)
+![Select ROS topic](doc/img/select_topic.png)
 
-[![Train](http://img.youtube.com/vi/6JdtWa8FD04/0.jpg)](http://www.youtube.com/watch?v=6JdtWa8FD04)
-<-- Youtube video
+If you do not have any available topic, try to use your webcam with use of the usb_cam node (http://wiki.ros.org/usb_cam), you can start this node with:
 
-Step 3: predict labels for new data with the [image_recognition_rqt#test-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#test-plugin)
+    rosrun usb_cam usb_cam_node # This step is optional ofcourse
+    
+Once you have an image stream in your GUI, you can draw a rectangle in the image feed, this ROI will be send to the object recognition srv.
 
-[![Recognize](http://img.youtube.com/vi/OJKYLB3myWw/0.jpg)](http://www.youtube.com/watch?v=OJKYLB3myWw)
-<-- Youtube video
+See https://github.com/tue-robotics/openface_ros for an example on faces.
 
-## Face recognition
-See the tutorial at [openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros)
+## Annotation plugin
 
-[![Face recognition](http://img.youtube.com/vi/yGqDdfYxHZw/0.jpg)](http://www.youtube.com/watch?v=yGqDdfYxHZw)
-<-- Youtube video
+![GUI Overview](doc/img/choco_peanuts.png)
 
-# Installation
+This RQT plugin (http://wiki.ros.org/rqt) enables easy labeling of objects using a graphical GUI. The end result will be a folder with label subdirs that contain image segments of the specified label, e.g. `/tmp/object_recognition`:
 
-Clone the repo in your catkin_ws:
-        
-        cd ~/catkin_ws/src
-        git clone https://github.com/tue-robotics/image_recognition.git
-        
-Build your catkin workspace
-        cd ~/catkin_ws
-        catkin_make
+    /tmp/object_recognition/:
+    drwxrwxr-x 2 rein rein 4,0K okt 18 21:22 apple
+    drwxrwxr-x 2 rein rein 4,0K okt 18 21:22 banana
+    drwxrwxr-x 2 rein rein 4,0K okt 18 21:22 choco_peanuts
+
+    /tmp/object_recognition/apple:
+    -rw-rw-r-- 1 rein rein 14K okt 18 21:22 2016-10-18-21-22-29.jpg
+    ...
+
+    /tmp/object_recognition/banana:
+    -rw-rw-r-- 1 rein rein 16K okt 18 21:22 2016-10-18-21-22-37.jpg
+    ...
+
+    /tmp/object_recognition/choco_peanuts:
+    -rw-rw-r-- 1 rein rein 8,6K okt 18 21:22 2016-10-18-21-22-43.jpg
+    ...
+    
+This folder can be used for training for example a neural network. A Tensorflow example can be found here: https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/image_retraining/retrain.py
+
+This plugin can also be used to test / use the `Annotate.srv`, see https://github.com/tue-robotics/openface_ros
+
+### How to 
+
+Start the rqt plugin stand alone (if this does not work, try a `rqt --force-rediscover`):
+
+    rosrun image_recognition_rqt annotation_gui # Calls a rqt -s image_recognition_rqt.annotation.AnnotationPlugin
+    
+Select a rostopic of type `sensor_msgs/Image` with use of the configuration button in the menu-bar (gear wheel icon):
+
+![Select ROS topic](doc/img/select_topic.png)
+
+If you do not have any available topic, try to use your webcam with use of the usb_cam node (http://wiki.ros.org/usb_cam), you can start this node with:
+
+    rosrun usb_cam usb_cam_node # This step is optional ofcourse
+    
+Once you have an image stream in your GUI, you can set the labels of your different objects with use of the 'Edit labels' button in the bottom-left corner:
+
+![Edit labels](doc/img/labels.png)
+
+It is also possible to specify your output path with use of the 'Edit path' button in the bottom-left corner:
+
+![Edit path](doc/img/select_path.png)
+
+All these settings will be stored in the rqt config. Once you have set everything up, you can start labeling by drawing a rectangle in the image stream:
+
+![GUI Overview](doc/img/choco_peanuts.png)
+
+A dialog will prompt that lets you select your object label and an image will be stored in the specified directory. If you want to capture more images for your object, just click the 'Save another one' button. If you want to save an image of a new object, redraw a rectangle and repeat the process.
+
+Happy labeling :)
+
+## Manual plugin
+Plugin for manually responding to a service call for classification
+
+    
+
