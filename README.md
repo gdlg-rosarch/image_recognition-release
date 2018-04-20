@@ -1,43 +1,54 @@
-# skybiometry_ros
+# TU/e Robotics image_recognition
+Packages for image recognition - Robocup TU/e Robotics
 
-Obtain face properties of a face image using the Skybiometry API (https://skybiometry.com/)
+## Package status & Description
 
-## Installation
+Package | Build status Xenial Kinetic x64 | Description
+------- | ------------------------------- | -----------
+[image_recognition](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition__ubuntu_xenial__source/1/) | Meta package for all image_recognition packages.
+[image_recognition_util](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_util) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_util__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_util__ubuntu_xenial__source/1/) | Utils shared among image recognition packages
+[image_recognition_msgs](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_msgs) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_msgs__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_msgs__ubuntu_xenial__source/1/) | Interface definition for image recognition
+[image_recognition_rqt](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt) | [![Build Status](http://build.ros.org/job/Ksrc_uX__image_recognition_rqt__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__image_recognition_rqt__ubuntu_xenial__source/1/) | RQT tools with helpers testing this interface and training/labeling data.
+[tensorflow_ros](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__tensorflow_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__tensorflow_ros__ubuntu_xenial__source/1/) | Object recognition with use of Tensorflow. The user can retrain the top layers of a neural network to perform classification with its own dataset as described in [this tutorial](https://www.tensorflow.org/versions/r0.11/how_tos/image_retraining/index.html).
+[tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt) | [![Build Status](http://build.ros.org/job/Ksrc_uX__tensorflow_ros_rqt__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__tensorflow_ros_rqt__ubuntu_xenial__source/1/) | RQT tools for retraining a Tensorflow neural network.
+[openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__openface_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__openface_ros__ubuntu_xenial__source/1/) | ROS wrapper for Openface (https://github.com/cmusatyalab/openface) to detect and recognize faces in images.
+[skybiometry_ros](https://github.com/tue-robotics/image_recognition/tree/master/skybiometry_ros) | [![Build Status](http://build.ros.org/job/Ksrc_uX__skybiometry_ros__ubuntu_xenial__source/1//badge/icon)](http://build.ros.org/job/Ksrc_uX__skybiometry_ros_ubuntu_xenial__source/1/) | ROS wrapper for Skybiometry (https://skybiometry.com/) for getting face properties of a detected face, e.g. age estimation, gender estimation etc.
 
-See https://github.com/tue-robotics/image_recognition
+## Travis CI Build Status
 
-## How-to
+[![Build Status](https://travis-ci.org/tue-robotics/image_recognition.svg)](https://travis-ci.org/tue-robotics/image_recognition)
 
-### ROS Node
+# How to
 
-Run the skybiometry ros node in one terminal (Please specify your own api secret and key via ROS parameters):
+## Object recognition
+Step 1: label images with the [image_recognition_rqt#annotation-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#annotation-plugin)
 
-    rosrun skybiometry_ros face_properties_node
-    
-Run the image_recognition_rqt test gui (https://github.com/tue-robotics/image_recognition_rqt)
+[![Annotate](http://img.youtube.com/vi/uAQvn7SInlg/0.jpg)](http://www.youtube.com/watch?v=uAQvn7SInlg)
+<-- Youtube video
 
-    rosrun image_recognition_rqt test_gui
-    
-Configure the service you want to call with the gear-wheel in the top-right corner of the screen. If everything is set-up, draw a rectangle in the image around a face:
+Step 2: train a neural network with the [tensorflow_ros_rqt](https://github.com/tue-robotics/image_recognition/tree/master/tensorflow_ros_rqt)
 
-![Test](doc/skybiometry_test.png)
+[![Train](http://img.youtube.com/vi/6JdtWa8FD04/0.jpg)](http://www.youtube.com/watch?v=6JdtWa8FD04)
+<-- Youtube video
 
-You will see that the result of the detection will prompt in a dialog box.
+Step 3: predict labels for new data with the [image_recognition_rqt#test-plugin](https://github.com/tue-robotics/image_recognition/tree/master/image_recognition_rqt#test-plugin)
 
-### Command line
+[![Recognize](http://img.youtube.com/vi/OJKYLB3myWw/0.jpg)](http://www.youtube.com/watch?v=OJKYLB3myWw)
+<-- Youtube video
 
-Command line interface to test the face properties based on an input face image:
+## Face recognition
+See the tutorial at [openface_ros](https://github.com/tue-robotics/image_recognition/tree/master/openface_ros)
 
-    usage: get_face_recognition.py [-h] -i IMAGE [-k ALIGN_PATH] [-s NET_PATH] [-v]
+[![Face recognition](http://img.youtube.com/vi/yGqDdfYxHZw/0.jpg)](http://www.youtube.com/watch?v=yGqDdfYxHZw)
+<-- Youtube video
 
-Run the command on an example image:
+# Installation
 
-    rosrun skybiometry_ros get_face_properties.py -i `rospack find skybiometry_ros`/doc/face.png
-
-This will lookup this image in the skybiometry_ros/doc folder and perform recognition
-
-![Example](doc/face.png)
-
-Output: 
-
-    [FaceProperties(age=[53, 0.5], eyes=[open, 0.95], gender=[male, 0.33], glasses=[false, 0.13], lips=[parted, 0.65], mood=[happy, 0.68])]    
+Clone the repo in your catkin_ws:
+        
+        cd ~/catkin_ws/src
+        git clone https://github.com/tue-robotics/image_recognition.git
+        
+Build your catkin workspace
+        cd ~/catkin_ws
+        catkin_make
